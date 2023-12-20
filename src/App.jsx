@@ -1,6 +1,8 @@
 
 import './App.css'
 import About from './components/About'
+import Seach from './components/Seach'
+
 
 function App() {
   return (
@@ -15,9 +17,7 @@ function App() {
             <div className="col-md-5">
               <button id="refresh"><h1>Обновить</h1></button>
             </div>
-            <div className="col-md-3">
-              <input type="text" className="form-control" placeholder="Search in table..." id="searchField" />
-            </div>
+            <Seach/>
             <div className="text-right">
               <span className="pr-3"><h1>Rows Per Page:</h1></span>
               <div className="col-md-2">
