@@ -59,3 +59,78 @@ td>a:hover {
     text-align: center;
 
 }
+/* Добавьте следующие стили в ваш файл About.css */
+
+.about-table {
+
+    text-align: center;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  #table-nav th {
+    background-color: #f2f2f2;
+  }
+  
+  select {
+    margin-bottom: 10px;
+    padding: 5px;
+  }
+  
+  button {
+    background-color: #4caf50;
+    color: white;
+    padding: 8px 16px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .page-info {
+    font-size: 14px;
+  }
+  
+  .page-navigation {
+    display: flex;
+  }
+  
+  .page-navigation button {
+    font-size: 14px;
+    margin: 5px;
+  }
+  
+  .page-navigation button:first-child {
+    margin-right: auto;
+  }
+  
+  .page-navigation button:last-child {
+    margin-left: auto;
+  }
+  
