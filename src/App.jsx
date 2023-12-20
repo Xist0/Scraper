@@ -1,12 +1,13 @@
 
 import './App.css'
-import Item from './components/Item';
+import About from './components/About'
 
 function App() {
   return (
     <>
 
       <div className="page-container">
+
         <div className="container">
           <h1 className="display-4">Table Sortable</h1>
 
@@ -33,7 +34,15 @@ function App() {
           </div>
         </div>
         <div className="line"></div>
-       <Item/>
+        <div className="container-table">
+          <table>
+            
+            <About />
+
+         
+          </table>
+        </div>
+        
       </div>
     </>
   )

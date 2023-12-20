@@ -1,0 +1,61 @@
+.container-table {
+    width: 100%;
+    max-width: calc(100% - 20%);
+    margin: auto;
+    padding: 40px 0;
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+table>tr>th>h1 {
+    padding-bottom: 20px;
+}
+
+th {
+    text-align: left;
+}
+
+td {
+    border-top: 1px solid #47474727;
+
+}
+
+td img {
+    width: 150px;
+    height: 150px;
+    padding: 10px;
+}
+
+td>p {
+    max-width: 90%;
+}
+
+td>a {
+    color: #16C1DF;
+}
+
+td>a:hover {
+    color: #0D7082;
+}
+
+#Artikyl {
+    width: 15%;
+}
+
+#Shop {
+    width: 20%;
+}
+
+#link,
+#Foto {
+    text-align: center;
+}
+
+#Prise {
+    text-align: center;
+
+}
