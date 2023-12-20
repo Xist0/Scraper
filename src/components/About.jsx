@@ -1,17 +1,22 @@
-import { useEffect, useState } from 'react'
+import React from 'react'
 import './About.css'
+import { data } from './data.js'
 
 function About() {
 
-  const [data, setData] = useState({})
 
-  useEffect(() => {
-    fetch('https://dummyjson.com/products/')
-      .then(res => res.json())
-      .then(json => {
-        setData(json)
-      })
-  }, [])
+  const listItem = data.map(data =>
+    <tr>
+      <td><p>{data.product_store}</p></td>
+      <td><p>{data.product_name}</p></td>
+      <td><p>{data.product_article}</p></td>
+      <td><p>{data.product_in_stock}</p></td>
+      <td id='Prise'><h1>{data.product_price} ₽</h1></td>
+      <td id='link' ><a href={data.product_link}><h1>Перейти</h1></a></td>
+      <td id='Foto'><img className='img' src={data.product_image} alt="" /></td>
+
+    </tr>
+  )
 
   return (
 
@@ -26,24 +31,7 @@ function About() {
           <th id='link'><h1>Ссылка</h1></th>
           <th id='Foto'><h1>Фото</h1></th>
         </tr>
-        {
-          data.products?.map((elem) => {
-            return <tr>
-              <td><p>{elem.title}</p></td>
-              <td><p>{elem.title}</p></td>
-              <td><p>{elem.title}</p></td>
-              <td><p>{elem.title}</p></td>
-              <td id='Prise'><h1>{elem.price} ₽</h1></td>
-              <td id='link' ><a href="#"><h1>Перейти</h1></a></td>
-              <td id='Foto'><img className='img' src={elem.thumbnail} alt="" /></td>
-             
-            </tr>
-            
-            
-          }, [])
-          
-        }
-        
+       {listItem}
       </table>
     </div>
 
