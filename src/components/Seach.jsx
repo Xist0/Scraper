@@ -12,10 +12,29 @@ const Search = () => {
   const onSubmit = (data) => {
     try {
       // Преобразование введенного текста в JSON
-      const jsonData = JSON.stringify({ data: data.name });
-      console.log('JSON данных:', jsonData);
+      const jsonData = JSON.stringify({
+        search_query: data.name, // используйте значение из input
+        stores_to_scrape: ["marko", "polo"],
+      });
+
+      // Отправка JSON на сервер
+      fetch('http://127.0.0.1:5005/query', {
+        method: 'POST',
+        body: jsonData,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          // Обработка ответа от сервера, например, изменение состояния компонента
+          console.log('Ответ от сервера:', response);
+
+          // Очистка текста в input
+          setInputValue('');
+        });
     } catch (error) {
-      console.error('Ошибка при преобразовании в JSON:', error);
+      console.error('Ошибка при преобразовании в JSON или отправке на сервер:', error);
     }
   };
 
