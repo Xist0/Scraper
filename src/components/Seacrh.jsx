@@ -21,7 +21,6 @@ const Search = () => {
           search_query: data.name,
           stores_to_scrape: ["marko", "polo"],
         }),
-        
       });
 
       if (!response.ok) {

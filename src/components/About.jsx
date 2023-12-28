@@ -9,7 +9,6 @@ function About() {
   const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
-    // Обновляем filteredData при изменении currentPage или itemsPerPage
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const newData = data.slice(startIndex, endIndex);
@@ -63,7 +62,7 @@ function About() {
         <tbody>{listItem}</tbody>
       </table>
 
-      <div>
+      <div className='Paginations'>
         {data.length > itemsPerPage && (
           <div>
             <button

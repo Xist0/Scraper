@@ -406,12 +406,3 @@ export const data = [
   }
 ]
 
-var columns = {
-product_store: 'Магазин',
-product_name: 'Наименование',
-product_article: 'Артикул',
-product_in_stock: 'В наличии',
-product_price: 'Цена',
-product_link: 'Ссылка',
-product_image: 'Фото',
-}

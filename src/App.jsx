@@ -30,10 +30,7 @@ function App() {
         <div className="line"></div>
         <div className="container-table">
           <table>
-            
             <About />
-
-         
           </table>
         </div>
         
