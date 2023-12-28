@@ -9,30 +9,29 @@ const Search = () => {
     setInputValue(e.target.value);
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     try {
-      // Преобразование введенного текста в JSON
-      const jsonData = JSON.stringify({
-        search_query: data.name, // используйте значение из input
-        stores_to_scrape: ["marko", "polo"],
+      const response = await fetch('http://127.0.0.1:5005/query', {
+        method: 'POST',
+        body: JSON.stringify({
+          search_query: data.name,
+          stores_to_scrape: ['marko', 'polo'],
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
       });
 
-      // Отправка JSON на сервер
-      fetch('http://127.0.0.1:5005/query', {
-        method: 'POST',
-        body: jsonData,
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          // Обработка ответа от сервера, например, изменение состояния компонента
-          console.log('Ответ от сервера:', response);
+      // Проверка статуса ответа
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
 
-          // Очистка текста в input
-          setInputValue('');
-        });
+      const result = await response.json();
+      console.log('Ответ от сервера:', result);
+
+      // Очистка текста в input
+      setInputValue('');
     } catch (error) {
       console.error('Ошибка при преобразовании в JSON или отправке на сервер:', error);
     }
