@@ -11,15 +11,17 @@ const Search = () => {
   };
 
   const onSubmit = async (data) => {
+    try {
       const response = await fetch('http://192.168.1.76:5005/scrape', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            search_query: [data.name],
-            stores_to_scrape: ["marko", "polo"],
+          search_query: data.name,
+          stores_to_scrape: ["marko", "polo"],
         }),
+        
       });
 
       if (!response.ok) {
@@ -28,6 +30,13 @@ const Search = () => {
 
       const result = await response.json();
       setDisplayText(result); // handle the response as needed
+    } catch (error) {
+      if (error.response && error.response.status === 422) {
+        console.error('Unprocessable Entity. Подробности:', await error.response.json());
+      } else {
+        console.error('Error during fetch:', error.message);
+      }
+    }
   };
 
   return (
