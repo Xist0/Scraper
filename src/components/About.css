@@ -108,3 +108,19 @@ td>a:hover {
     margin-left: auto;
   }
   
+  .Paginations {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .Paginations button {
+    cursor: pointer;
+    padding: 5px 10px;
+  }
+  
+  .Paginations button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  

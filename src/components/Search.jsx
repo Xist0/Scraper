@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-const Search = () => {
+const Search = ({ onSearchData }) => {
   const [text, setText] = useState('');
-  const [displayText, setDisplayText] = useState('');
   const { register, handleSubmit } = useForm();
 
   const handleChange = (e) => {
@@ -28,13 +27,9 @@ const Search = () => {
       }
 
       const result = await response.json();
-      setDisplayText(result); // handle the response as needed
+      onSearchData(result); // используйте onSearchData для обновления данных в родительском компоненте
     } catch (error) {
-      if (error.response && error.response.status === 422) {
-        console.error('Unprocessable Entity. Подробности:', await error.response.json());
-      } else {
-        console.error('Error during fetch:', error.message);
-      }
+      console.error('Error during fetch:', error.message);
     }
   };
 
@@ -55,7 +50,6 @@ const Search = () => {
         />
 
         <button type="submit">Show</button>
-        {displayText && <p>{displayText}</p>}
       </form>
     </>
   );

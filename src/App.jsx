@@ -1,9 +1,8 @@
 
 import './App.css'
+import React from 'react'
+import Search from './components/Search'
 import About from './components/About'
-import Search from './components/Seacrh'
-
-
 
 function App() {
   return (
@@ -18,7 +17,7 @@ function App() {
             <div className="col-md-5">
               <button id="refresh"><h1>Обновить</h1></button>
             </div>
-            <Search/>
+          <Search/>
             <div className="text-right">
               <span className="pr-3"><h1>Rows Per Page:</h1></span>
               <div className="col-md-2">
@@ -29,8 +28,8 @@ function App() {
         </div>
         <div className="line"></div>
         <div className="container-table">
-          <table>
-            <About />
+          <table>      
+            <About/>   
           </table>
         </div>
         
