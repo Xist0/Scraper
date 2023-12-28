@@ -1,4 +1,4 @@
-.container {
+.container-nav {
   width: 100%;
   max-width: calc(100% - 20%);
   margin: auto;
@@ -11,12 +11,6 @@
   font-weight: 700;
   padding-bottom: 20px;
 
-}
-
-.container-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .col-md-5 button {

@@ -9,7 +9,6 @@ function About() {
   const [displayData, setDisplayData] = useState([]);
 
   useEffect(() => {
-    // Обновляем displayData при изменении currentPage или itemsPerPage
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const newData = displayData.slice(startIndex, endIndex);
@@ -17,13 +16,11 @@ function About() {
   }, [currentPage, itemsPerPage]);
 
   const handleSearchData = (data) => {
-    // Обновляем displayData при получении новых данных от Search
     setDisplayData(data);
-    setCurrentPage(1); // Сбросим текущую страницу при новом поиске
+    setCurrentPage(1);
   };
 
   const handleSortByQuantity = () => {
-    // Сортировка по количеству элементов в наличии
     const sortedData = [...displayData].sort(
       (a, b) => b.product_in_stock - a.product_in_stock
     );
@@ -33,31 +30,33 @@ function About() {
   return (
     <div className="about-table">
       <div className="pagin">
-        <label htmlFor="itemsPerPage">Элементов на странице: </label>
-        <select
-          id="itemsPerPage"
-          value={itemsPerPage}
-          onChange={(e) => {
-            setItemsPerPage(parseInt(e.target.value, 10));
-            setCurrentPage(1);
-          }}
-        >
-          {itemsPerPageOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
+        <div className="">
+          <label htmlFor="itemsPerPage">Элементов на странице: </label>
+          <select
+            id="itemsPerPage"
+            value={itemsPerPage}
+            onChange={(e) => {
+              setItemsPerPage(parseInt(e.target.value, 10));
+              setCurrentPage(1);
+            }}
+          >
+            {itemsPerPageOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="sort">
+          <button onClick={handleSortByQuantity}>
+            <h1>Сортировать по количеству</h1>
+          </button>
+        </div>
+        <Search onSearchData={handleSearchData} />
       </div>
 
-      <div className="sort">
-        <button onClick={handleSortByQuantity}>
-          <h1>Сортировать по количеству</h1>
-        </button>
-      </div>
-      <Search onSearchData={handleSearchData} />
-
-
+      <div className="">
       <table>
         <thead>
           <tr id="table-nav">
@@ -114,6 +113,7 @@ function About() {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }
