@@ -148,21 +148,25 @@ function About() {
                 </button>
               </th>
               <th id="Prise">
-                <div>
-                  <label htmlFor="minPrice">Мин:</label>
-                  <input
-                    type="number"
-                    id="minPrice"
-                    value={minPrice}
-                    onChange={handleMinPriceChange}
-                  />
-                  <label htmlFor="maxPrice">Макс:</label>
-                  <input
-                    type="number"
-                    id="maxPrice"
-                    value={maxPrice}
-                    onChange={handleMaxPriceChange}
-                  />
+                <div className="Prise">
+                  <div className="label-prise">
+                    <label htmlFor="minPrice">Мин:</label>
+                    <input
+                      type="number"
+                      id="minPrice"
+                      value={minPrice}
+                      onChange={handleMinPriceChange}
+                    />
+                  </div>
+                  <div className="label-prise">
+                    <label htmlFor="maxPrice">Макс:</label>
+                    <input
+                      type="number"
+                      id="maxPrice"
+                      value={maxPrice}
+                      onChange={handleMaxPriceChange}
+                    />
+                  </div>
                 </div>
                 <button onClick={() => handleSort("product_price")}>
                   <h1>Цена</h1>
