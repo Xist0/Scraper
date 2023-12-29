@@ -6,6 +6,7 @@ function About() {
   const itemsPerPageOptions = [10, 20, 50];
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [originalData, setOriginalData] = useState([]); // Добавлено для хранения оригинальных данных
   const [displayData, setDisplayData] = useState([]);
   const [sortOrder, setSortOrder] = useState("asc");
   const [filterInStock, setFilterInStock] = useState(true);
@@ -13,18 +14,29 @@ function About() {
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    let newData = displayData.slice(startIndex, endIndex);
+    let newData = originalData.slice(startIndex, endIndex);
 
     // Применение фильтрации по наличию, если чекбокс включен
     if (filterInStock) {
       newData = newData.filter((item) => item.product_in_stock !== 0);
     }
 
+    // Применение сортировки
+    newData = newData.sort((a, b) => {
+      if (a.product_in_stock < b.product_in_stock) {
+        return sortOrder === "asc" ? -1 : 1;
+      }
+      if (a.product_in_stock > b.product_in_stock) {
+        return sortOrder === "asc" ? 1 : -1;
+      }
+      return 0;
+    });
+
     setDisplayData(newData);
-  }, [currentPage, itemsPerPage, filterInStock]);
+  }, [currentPage, itemsPerPage, filterInStock, sortOrder, originalData]);
 
   const handleSearchData = (data) => {
-    setDisplayData(data);
+    setOriginalData(data); // Обновляем оригинальные данные
     setCurrentPage(1);
   };
 
@@ -32,7 +44,7 @@ function About() {
     const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
     setSortOrder(newSortOrder);
 
-    const sortedData = [...displayData].sort((a, b) => {
+    const sortedData = [...originalData].sort((a, b) => {
       if (a[property] < b[property]) {
         return newSortOrder === "asc" ? -1 : 1;
       }
@@ -42,7 +54,7 @@ function About() {
       return 0;
     });
 
-    setDisplayData(sortedData);
+    setOriginalData(sortedData);
   };
 
   const handleToggleStockFilter = () => {
