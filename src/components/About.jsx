@@ -10,7 +10,7 @@ function About() {
   const [displayData, setDisplayData] = useState([]);
   const [sortOrder, setSortOrder] = useState("asc");
   const [filterInStock, setFilterInStock] = useState(true);
-  const [priceFilter, setPriceFilter] = useState(0);
+  const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function About() {
 
     // Применение фильтрации по цене
     const priceFilteredData = newData.filter(
-      (item) => item.product_price <= priceFilter
+      (item) => item.product_price >= minPrice && item.product_price <= maxPrice
     );
 
     // Применение сортировки
@@ -45,18 +45,24 @@ function About() {
     filterInStock,
     sortOrder,
     originalData,
-    priceFilter,
+    minPrice,
+    maxPrice,
   ]);
 
   const handleSearchData = (data) => {
     setOriginalData(data);
     setCurrentPage(1);
 
-    // Найдем максимальную цену в данных
+    // Найдем максимальную и минимальную цены в данных
     const maxProductPrice = Math.max(
       ...data.map((item) => item.product_price)
     );
     setMaxPrice(maxProductPrice);
+
+    const minProductPrice = Math.min(
+      ...data.map((item) => item.product_price)
+    );
+    setMinPrice(minProductPrice);
   };
 
   const handleSort = (property) => {
@@ -89,8 +95,12 @@ function About() {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   };
 
-  const handlePriceFilterChange = (e) => {
-    setPriceFilter(parseInt(e.target.value, 10));
+  const handleMinPriceChange = (e) => {
+    setMinPrice(parseInt(e.target.value, 10));
+  };
+
+  const handleMaxPriceChange = (e) => {
+    setMaxPrice(parseInt(e.target.value, 10));
   };
 
   return (
@@ -141,16 +151,25 @@ function About() {
                 </button>
               </th>
               <th id="Prise">
+                <div>
+                  <label htmlFor="minPrice">Мин:</label>
+                  <input
+                    type="number"
+                    id="minPrice"
+                    value={minPrice}
+                    onChange={handleMinPriceChange}
+                  />
+                  <label htmlFor="maxPrice">Макс:</label>
+                  <input
+                    type="number"
+                    id="maxPrice"
+                    value={maxPrice}
+                    onChange={handleMaxPriceChange}
+                  />
+                </div>
                 <button onClick={() => handleSort("product_price")}>
                   <h1>Цена</h1>
                 </button>
-                <input
-                  type="range"
-                  min={0}
-                  max={maxPrice}
-                  value={priceFilter}
-                  onChange={handlePriceFilterChange}
-                />
               </th>
               <th id="link">
                 <h1>Ссылка</h1>
