@@ -22,12 +22,10 @@ function About() {
     const endIndex = startIndex + itemsPerPage;
     const newData = filteredData.slice(startIndex, endIndex);
 
-    // Применение фильтрации по цене
     const priceFilteredData = newData.filter(
       (item) => item.product_price >= minPrice && item.product_price <= maxPrice
     );
 
-    // Применение сортировки
     const sortedData = priceFilteredData.sort((a, b) => {
       if (a.product_price < b.product_price) {
         return sortOrder === "asc" ? -1 : 1;
@@ -53,7 +51,6 @@ function About() {
     setOriginalData(data);
     setCurrentPage(1);
 
-    // Найдем максимальную и минимальную цены в данных
     const maxProductPrice = Math.max(
       ...data.map((item) => item.product_price)
     );
