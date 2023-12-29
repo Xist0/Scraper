@@ -10,16 +10,25 @@ function About() {
   const [displayData, setDisplayData] = useState([]);
   const [sortOrder, setSortOrder] = useState("asc");
   const [filterInStock, setFilterInStock] = useState(true);
+  const [priceFilter, setPriceFilter] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
 
   useEffect(() => {
-    const filteredData = originalData.filter((item) => (filterInStock ? item.product_in_stock !== 0 : true));
+    const filteredData = originalData.filter(
+      (item) => (filterInStock ? item.product_in_stock !== 0 : true)
+    );
 
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const newData = filteredData.slice(startIndex, endIndex);
 
+    // Применение фильтрации по цене
+    const priceFilteredData = newData.filter(
+      (item) => item.product_price <= priceFilter
+    );
+
     // Применение сортировки
-    const sortedData = newData.sort((a, b) => {
+    const sortedData = priceFilteredData.sort((a, b) => {
       if (a.product_price < b.product_price) {
         return sortOrder === "asc" ? -1 : 1;
       }
@@ -30,11 +39,24 @@ function About() {
     });
 
     setDisplayData(sortedData);
-  }, [currentPage, itemsPerPage, filterInStock, sortOrder, originalData]);
+  }, [
+    currentPage,
+    itemsPerPage,
+    filterInStock,
+    sortOrder,
+    originalData,
+    priceFilter,
+  ]);
 
   const handleSearchData = (data) => {
     setOriginalData(data);
     setCurrentPage(1);
+
+    // Найдем максимальную цену в данных
+    const maxProductPrice = Math.max(
+      ...data.map((item) => item.product_price)
+    );
+    setMaxPrice(maxProductPrice);
   };
 
   const handleSort = (property) => {
@@ -65,6 +87,10 @@ function About() {
   const handleNextPage = () => {
     const totalPages = Math.ceil(originalData.length / itemsPerPage);
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
+
+  const handlePriceFilterChange = (e) => {
+    setPriceFilter(parseInt(e.target.value, 10));
   };
 
   return (
@@ -118,6 +144,13 @@ function About() {
                 <button onClick={() => handleSort("product_price")}>
                   <h1>Цена</h1>
                 </button>
+                <input
+                  type="range"
+                  min={0}
+                  max={maxPrice}
+                  value={priceFilter}
+                  onChange={handlePriceFilterChange}
+                />
               </th>
               <th id="link">
                 <h1>Ссылка</h1>
