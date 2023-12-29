@@ -163,7 +163,7 @@ function About() {
           <button onClick={handlePrevPage} disabled={currentPage === 1}>
             Предыдущая
           </button>
-          <span>Страница {currentPage}</span>
+          <span>{currentPage}</span>
           <button
             onClick={handleNextPage}
             disabled={currentPage === Math.ceil(originalData.length / itemsPerPage)}
