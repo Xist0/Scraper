@@ -12,15 +12,14 @@ function About() {
   const [filterInStock, setFilterInStock] = useState(true);
 
   useEffect(() => {
+    const filteredData = originalData.filter((item) => (filterInStock ? item.product_in_stock !== 0 : true));
+
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    let newData = originalData.slice(startIndex, endIndex);
-
-    // Применение фильтрации по наличию, если чекбокс включен
-    newData = newData.filter((item) => (filterInStock ? item.product_in_stock !== 0 : true));
+    const newData = filteredData.slice(startIndex, endIndex);
 
     // Применение сортировки
-    newData = newData.sort((a, b) => {
+    const sortedData = newData.sort((a, b) => {
       if (a.product_price < b.product_price) {
         return sortOrder === "asc" ? -1 : 1;
       }
@@ -30,7 +29,7 @@ function About() {
       return 0;
     });
 
-    setDisplayData(newData);
+    setDisplayData(sortedData);
   }, [currentPage, itemsPerPage, filterInStock, sortOrder, originalData]);
 
   const handleSearchData = (data) => {
