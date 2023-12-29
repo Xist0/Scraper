@@ -2,37 +2,52 @@ import React, { useEffect, useState } from "react";
 import "./About.css";
 import Search from "./Search";
 
-
 function About() {
   const itemsPerPageOptions = [10, 20, 50];
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [displayData, setDisplayData] = useState([]);
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [filterInStock, setFilterInStock] = useState(true);
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const newData = displayData.slice(startIndex, endIndex);
+    let newData = displayData.slice(startIndex, endIndex);
+
+    // Применение фильтрации по наличию, если чекбокс включен
+    if (filterInStock) {
+      newData = newData.filter((item) => item.product_in_stock !== 0);
+    }
+
     setDisplayData(newData);
-  }, [currentPage, itemsPerPage]);
+  }, [currentPage, itemsPerPage, filterInStock]);
 
   const handleSearchData = (data) => {
     setDisplayData(data);
     setCurrentPage(1);
   };
 
-  const handleSortByQuantity = () => {
-    const sortedData = [...displayData].sort(
-      (a, b) => b.product_in_stock - a.product_in_stock 
-    );
+  const handleSort = (property) => {
+    const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
+    setSortOrder(newSortOrder);
+
+    const sortedData = [...displayData].sort((a, b) => {
+      if (a[property] < b[property]) {
+        return newSortOrder === "asc" ? -1 : 1;
+      }
+      if (a[property] > b[property]) {
+        return newSortOrder === "asc" ? 1 : -1;
+      }
+      return 0;
+    });
+
     setDisplayData(sortedData);
   };
-  const handleSortByprice= () =>{
-    const sortedPrise = [...displayData].sort(
-      (a, b) => b.product_price - a.product_price
-    );
-    setDisplayData(sortedPrise);
-  }
+
+  const handleToggleStockFilter = () => {
+    setFilterInStock((prev) => !prev);
+  };
 
   return (
     <div className="about-table">
@@ -55,7 +70,6 @@ function About() {
           </select>
         </div>
         <Search onSearchData={handleSearchData} />
-
       </div>
       <div id="line"></div>
       <div className="">
@@ -71,13 +85,21 @@ function About() {
               <th>
                 <h1>Артикул</h1>
               </th>
-              <button onClick={handleSortByQuantity}>
-                <h1>В наличии</h1>
-              </button>
+              <th>
+                <input
+                  type="checkbox"
+                  id="stock"
+                  checked={filterInStock}
+                  onChange={handleToggleStockFilter}
+                />
+                <button onClick={() => handleSort("product_in_stock")}>
+                  <h1>В наличии</h1>
+                </button>
+              </th>
               <th id="Prise">
-              <button onClick={handleSortByprice}>
-                <h1>Цена</h1>
-              </button>
+                <button onClick={() => handleSort("product_price")}>
+                  <h1>Цена</h1>
+                </button>
               </th>
               <th id="link">
                 <h1>Ссылка</h1>
