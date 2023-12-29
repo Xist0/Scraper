@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./About.css";
 import Search from "./Search";
 
+
 function About() {
   const itemsPerPageOptions = [10, 20, 50];
   const [currentPage, setCurrentPage] = useState(1);
@@ -47,72 +48,72 @@ function About() {
             ))}
           </select>
         </div>
-
+        <Search onSearchData={handleSearchData} />
         <div className="sort">
           <button onClick={handleSortByQuantity}>
             <h1>Сортировать по количеству</h1>
           </button>
         </div>
-        <Search onSearchData={handleSearchData} />
-      </div>
 
+      </div>
+      <div id="line"></div>
       <div className="">
-      <table>
-        <thead>
-          <tr id="table-nav">
-            <th>
-              <h1>Магазин</h1>
-            </th>
-            <th>
-              <h1>Наименование</h1>
-            </th>
-            <th>
-              <h1>Артикул</h1>
-            </th>
-            <th>
-              <h1>В наличии</h1>
-            </th>
-            <th id="Prise">
-              <h1>Цена</h1>
-            </th>
-            <th id="link">
-              <h1>Ссылка</h1>
-            </th>
-            <th id="Foto">
-              <h1>Фото</h1>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {displayData.map((item) => (
-            <tr key={item.product_article}>
-              <td>
-                <p>{item.product_store}</p>
-              </td>
-              <td>
-                <p>{item.product_name}</p>
-              </td>
-              <td>
-                <p>{item.product_article}</p>
-              </td>
-              <td>
-                <p>{item.product_in_stock}</p>
-              </td>
-              <td id="Prise">
-                <h1>{item.product_price} ₽</h1>
-              </td>
-              <td id="link">
-                <a href={item.product_link}>
-                  <h1>Перейти</h1>
-                </a>
-              </td>
-              <td id="Foto">
-                <img className="img" src={item.product_image} alt="" />
-              </td>
+        <table>
+          <thead>
+            <tr id="table-nav">
+              <th>
+                <h1>Магазин</h1>
+              </th>
+              <th>
+                <h1>Наименование</h1>
+              </th>
+              <th>
+                <h1>Артикул</h1>
+              </th>
+              <th>
+                <h1>В наличии</h1>
+              </th>
+              <th id="Prise">
+                <h1>Цена</h1>
+              </th>
+              <th id="link">
+                <h1>Ссылка</h1>
+              </th>
+              <th id="Foto">
+                <h1>Фото</h1>
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody id="search-results">
+            {displayData.map((item) => (
+              <tr key={item.product_article}>
+                <td>
+                  <p>{item.product_store}</p>
+                </td>
+                <td>
+                  <p>{item.product_name}</p>
+                </td>
+                <td>
+                  <p>{item.product_article}</p>
+                </td>
+                <td>
+                  <p>{item.product_in_stock}</p>
+                </td>
+                <td id="Prise">
+                  <h1>{item.product_price} ₽</h1>
+                </td>
+                <td id="link">
+                  <a href={item.product_link}>
+                    <h1>Перейти</h1>
+                  </a>
+                </td>
+                <td id="Foto">
+                  <img className="img" src={item.product_image} alt="" />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

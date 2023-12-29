@@ -43,13 +43,13 @@ const Search = ({ onSearchData }) => {
         <input
           {...register('name', { required: true })}
           type="text"
-          placeholder="name"
+          placeholder="Введите название товара"
           className="input input-bordered"
           value={text}
           onChange={handleChange}
         />
 
-        <button type="submit">Show</button>
+        <button type="submit">Найти</button>
       </form>
     </>
   );

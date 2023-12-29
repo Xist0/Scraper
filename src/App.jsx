@@ -11,8 +11,6 @@ function App() {
       <div className="page-container">
 
         <div className="container-nav">
-          <Search/>
-          
         </div>
       </div>
       <div className="line"></div>
