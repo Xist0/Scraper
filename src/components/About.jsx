@@ -6,7 +6,7 @@ function About() {
   const itemsPerPageOptions = [10, 20, 50];
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [originalData, setOriginalData] = useState([]); // Добавлено для хранения оригинальных данных
+  const [originalData, setOriginalData] = useState([]);
   const [displayData, setDisplayData] = useState([]);
   const [sortOrder, setSortOrder] = useState("asc");
   const [filterInStock, setFilterInStock] = useState(true);
@@ -36,7 +36,7 @@ function About() {
   }, [currentPage, itemsPerPage, filterInStock, sortOrder, originalData]);
 
   const handleSearchData = (data) => {
-    setOriginalData(data); // Обновляем оригинальные данные
+    setOriginalData(data);
     setCurrentPage(1);
   };
 
@@ -59,6 +59,14 @@ function About() {
 
   const handleToggleStockFilter = () => {
     setFilterInStock((prev) => !prev);
+  };
+
+  const handlePrevPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prev) => prev + 1);
   };
 
   return (
@@ -151,6 +159,18 @@ function About() {
             ))}
           </tbody>
         </table>
+        <div className="pagination">
+          <button onClick={handlePrevPage} disabled={currentPage === 1}>
+            Предыдущая
+          </button>
+          <span>Страница {currentPage}</span>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === Math.ceil(originalData.length / itemsPerPage)}
+          >
+            Следующая
+          </button>
+        </div>
       </div>
     </div>
   );
