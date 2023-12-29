@@ -17,16 +17,14 @@ function About() {
     let newData = originalData.slice(startIndex, endIndex);
 
     // Применение фильтрации по наличию, если чекбокс включен
-    if (filterInStock) {
-      newData = newData.filter((item) => item.product_in_stock !== 0);
-    }
+    newData = newData.filter((item) => (filterInStock ? item.product_in_stock !== 0 : true));
 
     // Применение сортировки
     newData = newData.sort((a, b) => {
-      if (a.product_in_stock < b.product_in_stock) {
+      if (a.product_price < b.product_price) {
         return sortOrder === "asc" ? -1 : 1;
       }
-      if (a.product_in_stock > b.product_in_stock) {
+      if (a.product_price > b.product_price) {
         return sortOrder === "asc" ? 1 : -1;
       }
       return 0;
@@ -66,7 +64,8 @@ function About() {
   };
 
   const handleNextPage = () => {
-    setCurrentPage((prev) => prev + 1);
+    const totalPages = Math.ceil(originalData.length / itemsPerPage);
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   };
 
   return (
