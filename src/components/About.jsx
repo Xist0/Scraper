@@ -23,10 +23,16 @@ function About() {
 
   const handleSortByQuantity = () => {
     const sortedData = [...displayData].sort(
-      (a, b) => b.product_in_stock - a.product_in_stock
+      (a, b) => b.product_in_stock - a.product_in_stock 
     );
     setDisplayData(sortedData);
   };
+  const handleSortByprice= () =>{
+    const sortedPrise = [...displayData].sort(
+      (a, b) => b.product_price - a.product_price
+    );
+    setDisplayData(sortedPrise);
+  }
 
   return (
     <div className="about-table">
@@ -49,11 +55,6 @@ function About() {
           </select>
         </div>
         <Search onSearchData={handleSearchData} />
-        <div className="sort">
-          <button onClick={handleSortByQuantity}>
-            <h1>Сортировать по количеству</h1>
-          </button>
-        </div>
 
       </div>
       <div id="line"></div>
@@ -70,11 +71,13 @@ function About() {
               <th>
                 <h1>Артикул</h1>
               </th>
-              <th>
+              <button onClick={handleSortByQuantity}>
                 <h1>В наличии</h1>
-              </th>
+              </button>
               <th id="Prise">
+              <button onClick={handleSortByprice}>
                 <h1>Цена</h1>
+              </button>
               </th>
               <th id="link">
                 <h1>Ссылка</h1>
