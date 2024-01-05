@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./About.css";
 import Search from "./Search";
+import { FaAngleDown } from "react-icons/fa";
 
 function About() {
   const itemsPerPageOptions = [10, 20, 50];
@@ -12,6 +13,7 @@ function About() {
   const [filterInStock, setFilterInStock] = useState(true);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
+  const [showPriceFilters, setShowPriceFilters] = useState(false);
 
   useEffect(() => {
     const filteredData = originalData.filter(
@@ -63,7 +65,8 @@ function About() {
   };
 
   const handleSort = (property) => {
-    const newSortOrder = sortOrder === "asc" ? "desc" : "asc";
+    // Если сортируем по цене, то всегда в порядке возрастания
+    const newSortOrder = property === "product_price" ? "asc" : sortOrder === "asc" ? "desc" : "asc";
     setSortOrder(newSortOrder);
 
     const sortedData = [...originalData].sort((a, b) => {
@@ -98,6 +101,10 @@ function About() {
 
   const handleMaxPriceChange = (e) => {
     setMaxPrice(parseInt(e.target.value, 10));
+  };
+
+  const handleTogglePriceFilters = () => {
+    setShowPriceFilters((prev) => !prev);
   };
 
   return (
@@ -137,40 +144,48 @@ function About() {
                 <h1>Артикул</h1>
               </th>
               <th>
+                <div className="availability">
                 <input
                   type="checkbox"
                   id="stock"
                   checked={filterInStock}
                   onChange={handleToggleStockFilter}
                 />
-                <button onClick={() => handleSort("product_in_stock")}>
+                
                   <h1>В наличии</h1>
-                </button>
-              </th>
-              <th id="Prise">
-                <div className="Prise">
-                  <div className="label-prise">
-                    <label htmlFor="minPrice">Мин:</label>
-                    <input
-                      type="number"
-                      id="minPrice"
-                      value={minPrice}
-                      onChange={handleMinPriceChange}
-                    />
-                  </div>
-                  <div className="label-prise">
-                    <label htmlFor="maxPrice">Макс:</label>
-                    <input
-                      type="number"
-                      id="maxPrice"
-                      value={maxPrice}
-                      onChange={handleMaxPriceChange}
-                    />
-                  </div>
+                  <FaAngleDown onClick={() => handleSort("product_in_stock")} />
                 </div>
+              </th>
+              {/* Цена */}
+              <th id="Prise">
                 <button onClick={() => handleSort("product_price")}>
                   <h1>Цена</h1>
                 </button>
+                <FaAngleDown onClick={handleTogglePriceFilters} />
+                <div className="Prise">
+                  {showPriceFilters && (
+                    <div className="label-prise">
+                      <label htmlFor="minPrice">Мин:</label>
+                      <input
+                        type="number"
+                        id="minPrice"
+                        value={minPrice}
+                        onChange={handleMinPriceChange}
+                      />
+                    </div>
+                  )}
+                  {showPriceFilters && (
+                    <div className="label-prise">
+                      <label htmlFor="maxPrice">Макс:</label>
+                      <input
+                        type="number"
+                        id="maxPrice"
+                        value={maxPrice}
+                        onChange={handleMaxPriceChange}
+                      />
+                    </div>
+                  )}
+                </div>
               </th>
               <th id="link">
                 <h1>Ссылка</h1>
