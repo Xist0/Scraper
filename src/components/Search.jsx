@@ -37,9 +37,8 @@ const Search = ({ onSearchData }) => {
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="card-body w-full lg:w-96"
       >
-        <label>Text: </label>
+        <label> </label>
         <input
           {...register('name', { required: true })}
           type="text"

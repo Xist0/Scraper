@@ -88,20 +88,24 @@ button:hover {
   margin-top: 20px;
   gap: 20px;
 }
-.availability{
+
+.availability {
   width: 100%;
   display: flex;
   align-items: center;
   gap: 10px;
 }
-svg{
+
+svg {
   cursor: pointer;
-  
+
 }
-svg:hover{
+
+svg:hover {
   background-color: #0D7082;
   border-radius: 50%;
 }
+
 .pagination button {
   cursor: pointer;
   padding: 5px 10px;
@@ -116,6 +120,34 @@ svg:hover{
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+input {
+  border-color: transparent;
+  border-bottom-color: transparent;
+  border-bottom-color: transparent;
+  border-bottom: 1px solid #0D7082;
+}
+
+.pagin>.about-pagin-search {
+  align-self: center;
+}
+
+.pagin>.card-body {
+  left: 25%;
+  position: relative;
+}
+
+.about-search {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.about-pagin-filters {
+  display: flex;
+  align-items: center;
 }
 
 .about-table {
@@ -143,7 +175,8 @@ svg:hover{
   display: flex;
   gap: 10px;
 }
-.label-prise > input{
+
+.label-prise>input {
   display: flex;
   justify-content: end;
   border-color: transparent;

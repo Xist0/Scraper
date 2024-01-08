@@ -14,6 +14,66 @@ function About() {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
   const [showPriceFilters, setShowPriceFilters] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [excludeTerm, setExcludeTerm] = useState("");
+
+  const handleSearchTermChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleExcludeTermChange = (e) => {
+    setExcludeTerm(e.target.value);
+  };
+
+  useEffect(() => {
+    // Фильтрация данных по введенному поисковому запросу
+    const filteredData = originalData.filter((item) => {
+      const searchFields = [
+        item.product_store,
+        item.product_name,
+        item.product_article,
+        item.product_in_stock.toString(),
+        item.product_price.toString(),
+        item.product_link,
+        // Добавьте другие поля, если необходимо
+      ];
+
+      // Проверка наличия совпадений в любом из полей
+      return searchFields.some((field) => {
+        if (typeof field === "string") {
+          return field.toLowerCase().includes(searchTerm.toLowerCase());
+        }
+        return false; // Если не является строкой, пропустить это поле
+      });
+    });
+
+    setDisplayData(filteredData);
+  }, [searchTerm, originalData]);
+
+  useEffect(() => {
+    // Исключение данных по введенному запросу
+    const excludedData = originalData.filter((item) => {
+      const searchFields = [
+        item.product_store,
+        item.product_name,
+        item.product_article,
+        item.product_in_stock.toString(),
+        item.product_price.toString(),
+        item.product_link,
+        // Добавьте другие поля, если необходимо
+      ];
+
+      // Проверка наличия совпадений в любом из полей
+      return !searchFields.some((field) => {
+        if (typeof field === "string") {
+          return field.toLowerCase().includes(excludeTerm.toLowerCase());
+        }
+        return false; // Если не является строкой, пропустить это поле
+      });
+    });
+
+    setDisplayData(excludedData);
+  }, [excludeTerm, originalData]);
 
   useEffect(() => {
     const filteredData = originalData.filter(
@@ -66,7 +126,8 @@ function About() {
 
   const handleSort = (property) => {
     // Если сортируем по цене, то всегда в порядке возрастания
-    const newSortOrder = property === "product_price" ? "asc" : sortOrder === "asc" ? "desc" : "asc";
+    const newSortOrder =
+      property === "product_price" ? "asc" : sortOrder === "asc" ? "desc" : "asc";
     setSortOrder(newSortOrder);
 
     const sortedData = [...originalData].sort((a, b) => {
@@ -110,24 +171,41 @@ function About() {
   return (
     <div className="about-table">
       <div className="pagin">
-        <div className="">
-          <label htmlFor="itemsPerPage">Элементов на странице: </label>
-          <select
-            id="itemsPerPage"
-            value={itemsPerPage}
-            onChange={(e) => {
-              setItemsPerPage(parseInt(e.target.value, 10));
-              setCurrentPage(1);
-            }}
-          >
-            {itemsPerPageOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
+          <div className="about-paginathions">
+            <label htmlFor="itemsPerPage">Элементов на странице: </label>
+            <select
+              id="itemsPerPage"
+              value={itemsPerPage}
+              onChange={(e) => {
+                setItemsPerPage(parseInt(e.target.value, 10));
+                setCurrentPage(1);
+              }}
+            >
+              {itemsPerPageOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="about-pagin-search">
+            <Search onSearchData={handleSearchData} />
+          </div>
+        <div className="about-search">
+
+          <input
+            type="text"
+            placeholder="Уточнить"
+            value={searchTerm}
+            onChange={handleSearchTermChange}
+          />
+          <input
+            type="text"
+            placeholder="Исключить"
+            value={excludeTerm}
+            onChange={handleExcludeTermChange}
+          />
         </div>
-        <Search onSearchData={handleSearchData} />
       </div>
       <div id="line"></div>
       <div className="">
@@ -145,13 +223,13 @@ function About() {
               </th>
               <th>
                 <div className="availability">
-                <input
-                  type="checkbox"
-                  id="stock"
-                  checked={filterInStock}
-                  onChange={handleToggleStockFilter}
-                />
-                
+                  <input
+                    type="checkbox"
+                    id="stock"
+                    checked={filterInStock}
+                    onChange={handleToggleStockFilter}
+                  />
+
                   <h1>В наличии</h1>
                   <FaAngleDown onClick={() => handleSort("product_in_stock")} />
                 </div>
